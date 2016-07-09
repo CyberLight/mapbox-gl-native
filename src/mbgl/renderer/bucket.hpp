@@ -32,10 +32,6 @@ public:
     // this only happens once when the bucket is being rendered for the first time.
     virtual void upload(gl::ObjectStore&, gl::Config&) = 0;
 
-    // Every time this bucket is getting rendered, this function is called. This happens either
-    // once or twice (for Opaque and Transparent render passes).
-    virtual void render(Painter&, PaintParameters&, const style::Layer&, const RenderTile&) = 0;
-
     virtual ~Bucket() = default;
 
     virtual bool hasData() const = 0;

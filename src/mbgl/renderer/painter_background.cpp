@@ -27,8 +27,8 @@ void Painter::renderBackground(PaintParameters& parameters, const BackgroundLaye
     auto& arrayBackground = parameters.shaders.backgroundArray;
 
     if (isPatterned) {
-        imagePosA = spriteAtlas->getPosition(properties.backgroundPattern.value.from, true);
-        imagePosB = spriteAtlas->getPosition(properties.backgroundPattern.value.to, true);
+        imagePosA = parameters.spriteAtlas.getPosition(properties.backgroundPattern.value.from, true);
+        imagePosB = parameters.spriteAtlas.getPosition(properties.backgroundPattern.value.to, true);
 
         if (!imagePosA || !imagePosB)
             return;
@@ -42,7 +42,7 @@ void Painter::renderBackground(PaintParameters& parameters, const BackgroundLaye
         patternShader.u_mix = properties.backgroundPattern.value.t;
         patternShader.u_opacity = properties.backgroundOpacity;
 
-        spriteAtlas->bind(true, store, config, 0);
+        parameters.spriteAtlas.bind(true, store, config, 0);
         arrayBackgroundPattern.bind(patternShader, tileStencilBuffer, BUFFER_OFFSET(0), store);
 
     } else {
@@ -57,7 +57,7 @@ void Painter::renderBackground(PaintParameters& parameters, const BackgroundLaye
     config.depthFunc.reset();
     config.depthTest = GL_TRUE;
     config.depthMask = GL_FALSE;
-    setDepthSublayer(0);
+    parameters.setDepthSublayer(0);
 
     for (const auto& tileID : util::tileCover(state, state.getIntegerZoom())) {
         mat4 vertexMatrix;

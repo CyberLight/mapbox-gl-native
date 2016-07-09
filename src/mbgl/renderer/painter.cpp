@@ -69,12 +69,21 @@ void Painter::render(const Style& style, const FrameData& frame_, SpriteAtlas& a
     frame = frame_;
 
     PaintParameters parameters {
-        isOverdraw() ? *overdrawShaders : *shaders
+        config,
+        store,
+        isOverdraw() ? *overdrawShaders : *shaders,
+        rasterBoundsBuffer,
+        isOverdraw(),
+        frame.framebufferSize,
+        frame.pixelRatio,
+        frame.mapMode,
+        state,
+        pixelsToGLUnits,
+        *style.spriteAtlas,
+        *style.glyphAtlas,
+        *style.lineAtlas,
+        frameHistory
     };
-
-    glyphAtlas = style.glyphAtlas.get();
-    spriteAtlas = style.spriteAtlas.get();
-    lineAtlas = style.lineAtlas.get();
 
     RenderData renderData = style.getRenderData(frame.debugOptions);
     const std::vector<RenderItem>& order = renderData.order;
@@ -100,9 +109,9 @@ void Painter::render(const Style& style, const FrameData& frame_, SpriteAtlas& a
         tileStencilBuffer.upload(store);
         rasterBoundsBuffer.upload(store);
         tileBorderBuffer.upload(store);
-        spriteAtlas->upload(store, config, 0);
-        lineAtlas->upload(store, config, 0);
-        glyphAtlas->upload(store, config, 0);
+        parameters.spriteAtlas.upload(store, config, 0);
+        parameters.lineAtlas.upload(store, config, 0);
+        parameters.glyphAtlas.upload(store, config, 0);
         frameHistory.upload(store, config, 0);
         annotationSpriteAtlas.upload(store, config, 0);
 
