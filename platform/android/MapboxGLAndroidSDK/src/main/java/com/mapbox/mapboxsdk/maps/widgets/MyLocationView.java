@@ -91,6 +91,9 @@ public class MyLocationView extends View {
     private Matrix matrix;
     private Camera camera;
     private PointF screenLocation;
+
+    // camera vars
+    private float bearing;
     private float tilt;
 
     @MyLocationTracking.Mode
@@ -260,7 +263,7 @@ public class MyLocationView extends View {
 
         // apply tilt to camera
         camera.save();
-        camera.rotate(tilt, 0, 0);
+        camera.rotate(tilt, 0, bearing);
 
         // map camera matrix on our matrix
         camera.getMatrix(matrix);
@@ -299,6 +302,15 @@ public class MyLocationView extends View {
 
     public void setTilt(@FloatRange(from = 0, to = 60.0f) double tilt) {
         this.tilt = (float) tilt;
+    }
+
+    public void setBearing(double bearing) {
+        this.bearing = (float) bearing;
+    }
+
+    public void setCameraPosition(CameraPosition position) {
+        setTilt(position.tilt);
+        setBearing(position.bearing);
     }
 
     public void onPause() {
