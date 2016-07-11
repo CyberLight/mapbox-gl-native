@@ -1400,6 +1400,7 @@ public class MapView extends FrameLayout {
         if (mDestroyed) {
             return;
         }
+        mMyLocationView.setBearing(bearing);
         mNativeMapView.setBearing(bearing, focalX, focalY);
     }
 
