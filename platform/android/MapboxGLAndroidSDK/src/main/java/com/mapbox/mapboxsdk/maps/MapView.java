@@ -638,6 +638,7 @@ public class MapView extends FrameLayout {
         if (mDestroyed) {
             return;
         }
+        mMyLocationView.setBearing(0);
         mNativeMapView.cancelTransitions();
         mNativeMapView.resetNorth();
     }
@@ -1383,6 +1384,7 @@ public class MapView extends FrameLayout {
         if (mDestroyed) {
             return;
         }
+        mMyLocationView.setBearing(bearing);
         mNativeMapView.setBearing(bearing);
     }
 
@@ -1390,6 +1392,7 @@ public class MapView extends FrameLayout {
         if (mDestroyed) {
             return;
         }
+        mMyLocationView.setBearing(bearing);
         mNativeMapView.setBearing(bearing, duration);
     }
 
