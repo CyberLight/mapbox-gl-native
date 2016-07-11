@@ -262,13 +262,7 @@ public class MapView extends FrameLayout {
         }
 
         // access token
-        String accessToken;
-        if (MapboxAccountManager.getInstance() != null) {
-            accessToken = MapboxAccountManager.getInstance().getAccessToken();
-        } else {
-            accessToken = options.getAccessToken();
-        }
-
+        String accessToken = options.getAccessToken();
         if (!TextUtils.isEmpty(accessToken)) {
             mMapboxMap.setAccessToken(accessToken);
         }
