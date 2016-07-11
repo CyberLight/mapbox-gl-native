@@ -15,7 +15,7 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.geometry.LatLngBounds;
 import com.mapbox.mapboxsdk.geometry.ProjectedMeters;
 import com.mapbox.mapboxsdk.layers.CustomLayer;
-import com.mapbox.mapboxsdk.style.properties.LayoutProperty;
+import com.mapbox.mapboxsdk.style.layers.Layer;
 
 import java.util.List;
 
@@ -472,8 +472,8 @@ final class NativeMapView {
 
     // Runtime style Api
 
-    public void setLayoutProperty(String layerId, LayoutProperty<?> property) {
-        nativeSetLayoutProperty(mNativeMapViewPtr, layerId, property.name, property.value);
+    public Layer getLayer(String layerId) {
+        return nativeGetLayer(mNativeMapViewPtr, layerId);
     }
 
     //
@@ -652,5 +652,6 @@ final class NativeMapView {
 
     private native double[] nativeGetCameraValues(long mNativeMapViewPtr);
 
-    private native void nativeSetLayoutProperty(long mNativeMapViewPtr, String layerId, String name, Object value);
+    private native Layer nativeGetLayer(long mNativeMapViewPtr, String layerId);
+
 }
