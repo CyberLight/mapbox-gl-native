@@ -196,7 +196,7 @@ public class MapView extends FrameLayout {
 
         // Reference the TextureView
         SurfaceView surfaceView = (SurfaceView) view.findViewById(R.id.surfaceView);
-        
+
         // Check if we are in Android Studio UI editor to avoid error in layout preview
         if (isInEditMode()) {
             return;
@@ -358,8 +358,17 @@ public class MapView extends FrameLayout {
      */
     @UiThread
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        String accessToken = mMapboxMap.getAccessToken();
+        if (TextUtils.isEmpty(accessToken)) {
+            accessToken = MapboxAccountManager.getInstance().getAccessToken();
+            mMapboxMap.setAccessToken(accessToken);
+        } else {
+            // user provided access token through xml attributes, need to start MapboxAccountManager
+            MapboxAccountManager.start(getContext(), accessToken);
+        }
+
         // Force a check for an access token
-        MapboxAccountManager.validateAccessToken(getAccessToken());
+        MapboxAccountManager.validateAccessToken(accessToken);
 
         if (savedInstanceState != null && savedInstanceState.getBoolean(MapboxConstants.STATE_HAS_SAVED_STATE)) {
 
