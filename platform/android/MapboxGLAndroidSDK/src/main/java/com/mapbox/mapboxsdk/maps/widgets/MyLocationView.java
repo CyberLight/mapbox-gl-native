@@ -674,7 +674,7 @@ public class MyLocationView extends View {
                 if (location.hasBearing()) {
                     builder.bearing(location.getBearing());
                 }
-                gpsDirection = 0;
+                gpsDirection = location.getBearing();
                 setCompass(gpsDirection);
             } else if (myBearingTrackingMode == MyBearingTracking.COMPASS) {
                 if (!compassListener.isPaused()) {

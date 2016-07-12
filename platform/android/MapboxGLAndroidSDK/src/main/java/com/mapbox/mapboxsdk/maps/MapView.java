@@ -1347,20 +1347,13 @@ public class MapView extends FrameLayout {
         }
     }
 
-    // Used by UserLocationView
-    void update() {
-        if (mDestroyed) {
-            return;
-        }
-
-        mNativeMapView.update();
-    }
-
     CameraPosition invalidateCameraPosition() {
         if (mDestroyed) {
             return new CameraPosition.Builder().build();
         }
-        return new CameraPosition.Builder(mNativeMapView.getCameraValues()).build();
+        CameraPosition position = new CameraPosition.Builder(mNativeMapView.getCameraValues()).build();
+        mMyLocationView.setCameraPosition(position);
+        return position;
     }
 
     double getBearing() {
